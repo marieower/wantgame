@@ -1,12 +1,15 @@
-import { Card, Tabs } from 'antd'
+import { Card, Tabs, Spin } from 'antd'
 import React from 'react'
 import './index.css'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import { useSelector } from 'react-redux'
+import { IRootState } from '../../store/state'
 
 const { TabPane } = Tabs
 
 export const LoginRegister = () => {
+  const { isFetching } = useSelector((state: IRootState) => state.userControl)
   return (
     <div className='LoginRegister-container'>
       <Card className='LoginRegister' style={{ width: 500 }}>
@@ -18,6 +21,7 @@ export const LoginRegister = () => {
             <RegisterForm />
           </TabPane>
         </Tabs>
+        )}
       </Card>
     </div>
   )

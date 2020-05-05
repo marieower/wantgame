@@ -35,6 +35,7 @@ export class UserControlReducer
         break
       case USER_CONTROL_LOGOUT:
         newState.user = null
+        localStorage.clear()
         break
       case USER_CONTROL_SET_FETCHING:
         newState.isFetching = action.payload

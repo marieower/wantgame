@@ -36,6 +36,8 @@ export class UserControlApiSaga {
 
     if (response.status === 200) {
       yield put(userControlActions.loggedIn(response.data))
+
+      localStorage.setItem('userId', String(response.data.id))
     } else {
     }
 

@@ -5,11 +5,19 @@ import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
 export abstract class AbstractClient {
   public entity: Entity
   public URL: string
-  public axios = axios.create({ timeout: 20000 })
+  public axios: any
 
   public constructor(entity: Entity) {
     this.entity = entity
     this.URL = `${serverEntryPoint}${this.entity}`
+    this.axios = axios.create({
+      timeout: 20000,
+      headers: {
+        Authorization: `Basic ${Buffer.from('1:password', 'utf8').toString(
+          'base64',
+        )}`,
+      },
+    })
   }
 
   public errorHandler = (error: AxiosError): AxiosResponse | AxiosError => {
