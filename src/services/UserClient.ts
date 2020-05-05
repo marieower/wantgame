@@ -39,10 +39,11 @@ export class UserClient extends AbstractClient {
     }
   }
 
-  public logout = async (): Promise<AxiosResponse<any> | AxiosError> => {
-    try {
-    } catch (error) {
-      return this.errorHandler(error)
-    }
-  }
+  // Todo:
+  // public logout = async (): Promise<AxiosResponse<any> | AxiosError> => {
+  //   try {
+  //   } catch (error) {
+  //     return this.errorHandler(error)
+  //   }
+  // }
 }
