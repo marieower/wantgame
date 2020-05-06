@@ -21,6 +21,14 @@ export const LoginRegister = () => {
             <RegisterForm />
           </TabPane>
         </Tabs>
+        {isFetching && (
+          <div className='LoginRegister-container__dimmer'>
+            <Spin
+              className='spin'
+              size='large'
+              tip='Пожалуйста, подождите...'
+            />
+          </div>
         )}
       </Card>
     </div>
