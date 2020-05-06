@@ -1,15 +1,26 @@
-import { Card, Tabs, Spin } from 'antd'
-import React from 'react'
+import { Card, Spin, Tabs } from 'antd'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
+import { IRootState } from '../../store/state'
 import './index.css'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
-import { useSelector } from 'react-redux'
-import { IRootState } from '../../store/state'
 
 const { TabPane } = Tabs
 
 export const LoginRegister = () => {
-  const { isFetching } = useSelector((state: IRootState) => state.userControl)
+  const { isFetching, user } = useSelector(
+    (state: IRootState) => state.userControl,
+  )
+  const history = useHistory()
+
+  useEffect(() => {
+    if (user !== null) {
+      history.push('/')
+    }
+  }, [user])
+
   return (
     <div className='LoginRegister-container'>
       <Card className='LoginRegister' style={{ width: 500 }}>
