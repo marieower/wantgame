@@ -5,11 +5,13 @@ import {
   USER_CONTROL_LOGOUT,
   USER_CONTROL_LOGGED_IN,
   USER_CONTROL_SET_FETCHING,
+  USER_CONTROL_SET_ERROR,
 } from './actions'
 
 const initialState: IUserControlState = {
   user: null,
   isFetching: false,
+  error: '',
 }
 
 export class UserControlReducer
@@ -35,10 +37,13 @@ export class UserControlReducer
         break
       case USER_CONTROL_LOGOUT:
         newState.user = null
-        localStorage.clear()
+        localStorage.setItem('userId', '')
         break
       case USER_CONTROL_SET_FETCHING:
         newState.isFetching = action.payload
+        break
+      case USER_CONTROL_SET_ERROR:
+        newState.error = action.payload
         break
     }
 

@@ -1,11 +1,16 @@
 .PageWrapper header .logo {
-	width: 120px;
-	height: 31px;
-	background: rgba(255, 255, 255, 0.2);
-	margin: 16px 28px 16px 0;
-	float: left;
+  width: 200px;
+  height: 70px;
+  background-image: url('./logo.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  float: left;
 }
 
 .site-layout-background {
-	background: #fff;
+  background: #fff;
+}
+
+.PageWrapper .link-divided {
+  border-bottom: 1px solid #f0f0f0;
 }

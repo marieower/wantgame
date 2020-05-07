@@ -2,8 +2,9 @@ import { PlusOutlined, UserOutlined } from '@ant-design/icons'
 import { Affix, Divider, Layout, Menu } from 'antd'
 import React, { ReactNode } from 'react'
 import './index.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { IRootState } from '../../store/state'
+import { userControlActions } from '../userControl/actions'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -13,6 +14,12 @@ interface IPageWrapperProps {
 
 export const PageWrapper = ({ children }: IPageWrapperProps) => {
   const { user } = useSelector((state: IRootState) => state.userControl)
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(userControlActions.logout())
+  }
+
   return (
     <Layout className='PageWrapper'>
       <Header className='header'>
@@ -31,27 +38,23 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
                 defaultOpenKeys={['sub1']}
                 style={{ height: '100%' }}
               >
-                <Menu.Item key='1'>
+                <Menu.Item key='1' className='link-divided'>
                   <UserOutlined /> {`${user?.firstName} ${user?.lastName}`}
-                </Menu.Item>
-                <Menu.Item>
-                  <Divider />
                 </Menu.Item>
 
                 <Menu.Item key='2'>Главная</Menu.Item>
                 <Menu.Item key='3'>Личный кабинет</Menu.Item>
                 <Menu.Item key='4'>Созданные мной</Menu.Item>
                 <Menu.Item key='5'>Я участвую</Menu.Item>
-                <Menu.Item key='6'>
+                <Menu.Item key='6' className='link-divided'>
                   <PlusOutlined />
                   Создать событие
                 </Menu.Item>
-                <Menu.Item>
-                  <Divider />
-                </Menu.Item>
 
                 <Menu.Item key='7'>О системе</Menu.Item>
-                <Menu.Item key='8'>Выход</Menu.Item>
+                <Menu.Item key='8' onClick={handleLogout}>
+                  Выход
+                </Menu.Item>
               </Menu>
             </Affix>
           </Sider>

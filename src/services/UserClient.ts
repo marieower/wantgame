@@ -2,13 +2,16 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { UserDto } from '../shared/dto/UserDto'
 import { AbstractClient } from './AbstractClient'
 import { NewUserDto } from '../shared/dto/NewUserDto'
+import { ErrorDto } from '../shared/dto/ErrorDto'
 
 export class UserClient extends AbstractClient {
   constructor() {
     super('users')
   }
 
-  public login = async (): Promise<AxiosResponse<any> | AxiosError> => {
+  public login = async (): Promise<
+    AxiosResponse<UserDto | ErrorDto> | AxiosError
+  > => {
     try {
       const response: AxiosResponse<UserDto> = await this.axios.get(
         `${this.URL}/login`,
@@ -27,7 +30,7 @@ export class UserClient extends AbstractClient {
   ): Promise<AxiosResponse | AxiosError> => {
     try {
       const response: AxiosResponse = await this.axios.post(
-        `${this.URL}/register`,
+        `${this.URL}/registration`,
         dto,
       )
 

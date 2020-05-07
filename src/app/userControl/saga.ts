@@ -1,9 +1,10 @@
-import { AxiosResponse } from 'axios'
+import { AxiosResponse, AxiosError } from 'axios'
 import { put, takeEvery } from 'redux-saga/effects'
 import { userControl } from '../..'
 import { safeSagaExecute } from '../../middleware/saga'
 import { NewUserDto } from '../../shared/dto/NewUserDto'
 import { UserDto } from '../../shared/dto/UserDto'
+import { ErrorDto } from '../../shared/dto/ErrorDto'
 import { IActionPayloaded } from '../../store/IAction'
 import {
   userControlActions,
@@ -31,14 +32,16 @@ export class UserControlApiSaga {
 
   private *login(action: IActionPayloaded<Partial<UserDto>>) {
     yield put(userControlActions.setFetching(true))
+    yield put(userControlActions.setError(''))
 
-    const response: AxiosResponse<UserDto> = yield userControl.login()
+    const response: AxiosResponse = yield userControl.login()
 
     if (response.status === 200) {
       yield put(userControlActions.loggedIn(response.data))
 
       localStorage.setItem('userId', String(response.data.id))
     } else {
+      yield put(userControlActions.setError(response.data.error))
     }
 
     yield put(userControlActions.setFetching(false))
@@ -46,13 +49,14 @@ export class UserControlApiSaga {
 
   private *register(action: IActionPayloaded<NewUserDto>) {
     yield put(userControlActions.setFetching(true))
+    yield put(userControlActions.setError(''))
 
-    const response: AxiosResponse<UserDto> = yield userControl.register(
-      action.payload,
-    )
+    const response: AxiosResponse = yield userControl.register(action.payload)
 
     if (response.status === 200) {
+      console.log(response)
     } else {
+      yield put(userControlActions.setError(response.data.error))
     }
 
     yield put(userControlActions.setFetching(false))

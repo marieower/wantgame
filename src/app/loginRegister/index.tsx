@@ -1,4 +1,4 @@
-import { Card, Spin, Tabs } from 'antd'
+import { Card, Spin, Tabs, Alert } from 'antd'
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
@@ -10,7 +10,7 @@ import { RegisterForm } from './RegisterForm'
 const { TabPane } = Tabs
 
 export const LoginRegister = () => {
-  const { isFetching, user } = useSelector(
+  const { isFetching, user, error } = useSelector(
     (state: IRootState) => state.userControl,
   )
   const history = useHistory()
@@ -32,6 +32,9 @@ export const LoginRegister = () => {
             <RegisterForm />
           </TabPane>
         </Tabs>
+
+        {error && <Alert closable={true} message={error} type='error' />}
+
         {isFetching && (
           <div className='LoginRegister-container__dimmer'>
             <Spin

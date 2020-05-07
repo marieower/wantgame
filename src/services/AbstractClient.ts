@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { Entity } from '../shared/types/Entity'
 import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
+import { ErrorDto } from '../shared/dto/ErrorDto'
 
 export abstract class AbstractClient {
   public entity: Entity
@@ -20,7 +21,7 @@ export abstract class AbstractClient {
     })
   }
 
-  public errorHandler = (error: AxiosError): AxiosResponse | AxiosError => {
+  public errorHandler = (error: AxiosError): AxiosResponse<ErrorDto> => {
     // Error 😨
     if (error.response) {
       /*
@@ -31,24 +32,11 @@ export abstract class AbstractClient {
       console.log(error.response.status)
       console.log(error.response.headers)
       return error.response
-    } else if (error.request) {
-      /*
-       * The request was made but no response was received, `error.request`
-       * is an instance of XMLHttpRequest in the browser and an instance
-       * of http.ClientRequest in Node.js
-       */
-      console.log(error.request)
-
-      return {
-        data: {
-          error: error.message,
-        },
-      } as AxiosResponse
-    } else {
-      // Something happened in setting up the request and triggered an Error
-      console.log('Error', error.message)
     }
-
-    return error
+    return {
+      data: {
+        error: error.message,
+      },
+    } as AxiosResponse<ErrorDto>
   }
 }

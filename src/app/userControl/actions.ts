@@ -7,6 +7,7 @@ export const USER_CONTROL_REGISTER = 'USER_CONTROL_REGISTER'
 export const USER_CONTROL_LOGOUT = 'USER_CONTROL_LOGOUT'
 
 export const USER_CONTROL_SET_FETCHING = 'USER_CONTROL_SET_FETCHING'
+export const USER_CONTROL_SET_ERROR = 'USER_CONTROL_SET_ERROR'
 
 export const userControlActions = {
   login: (dto: Partial<UserDto>) => ({
@@ -29,6 +30,11 @@ export const userControlActions = {
 
   setFetching: (payload: boolean) => ({
     type: USER_CONTROL_SET_FETCHING,
+    payload,
+  }),
+
+  setError: (payload: string) => ({
+    type: USER_CONTROL_SET_ERROR,
     payload,
   }),
 }
