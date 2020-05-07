@@ -19,7 +19,7 @@ export const LoginRegister = () => {
     if (user !== null) {
       history.push('/')
     }
-  }, [user])
+  }, [user, history])
 
   return (
     <div className='LoginRegister-container'>

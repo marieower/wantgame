@@ -5,8 +5,8 @@ import { NewUserDto } from '../shared/dto/NewUserDto'
 import { ErrorDto } from '../shared/dto/ErrorDto'
 
 export class UserClient extends AbstractClient {
-  constructor() {
-    super('users')
+  constructor(phone: string = '1', password: string = 'password') {
+    super('users', phone, password)
   }
 
   public login = async (): Promise<

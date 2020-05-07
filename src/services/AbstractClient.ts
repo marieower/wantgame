@@ -1,14 +1,14 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { Entity } from '../shared/types/Entity'
 import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
 import { ErrorDto } from '../shared/dto/ErrorDto'
+import { Entity } from '../shared/types/Entity'
 
 export abstract class AbstractClient {
   public entity: Entity
   public URL: string
   public axios: any
 
-  public constructor(entity: Entity) {
+  public constructor(entity: Entity, phone: string, password: string) {
     this.entity = entity
     this.URL = `${serverEntryPoint}${this.entity}`
     this.axios = axios.create({

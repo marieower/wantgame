@@ -1,10 +1,12 @@
 import { PlusOutlined, UserOutlined } from '@ant-design/icons'
-import { Affix, Divider, Layout, Menu } from 'antd'
+import { Affix, Layout, Menu } from 'antd'
 import React, { ReactNode } from 'react'
-import './index.css'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { Locked } from '../../shared/components/Locked'
 import { IRootState } from '../../store/state'
 import { userControlActions } from '../userControl/actions'
+import './index.css'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -14,6 +16,7 @@ interface IPageWrapperProps {
 
 export const PageWrapper = ({ children }: IPageWrapperProps) => {
   const { user } = useSelector((state: IRootState) => state.userControl)
+  const isLoggedIn = user !== null
   const dispatch = useDispatch()
 
   const handleLogout = () => {
@@ -34,27 +37,48 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
             <Affix>
               <Menu
                 mode='inline'
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={['2']}
                 defaultOpenKeys={['sub1']}
                 style={{ height: '100%' }}
               >
                 <Menu.Item key='1' className='link-divided'>
-                  <UserOutlined /> {`${user?.firstName} ${user?.lastName}`}
+                  {isLoggedIn ? (
+                    <>
+                      <UserOutlined /> {`${user?.firstName} ${user?.lastName}`}
+                    </>
+                  ) : (
+                    <Link to='/login-register'>Войти</Link>
+                  )}
                 </Menu.Item>
 
                 <Menu.Item key='2'>Главная</Menu.Item>
-                <Menu.Item key='3'>Личный кабинет</Menu.Item>
-                <Menu.Item key='4'>Созданные мной</Menu.Item>
-                <Menu.Item key='5'>Я участвую</Menu.Item>
-                <Menu.Item key='6' className='link-divided'>
+                <Menu.Item key='3' disabled={!isLoggedIn}>
+                  <Locked active={!isLoggedIn} />
+                  Личный кабинет{' '}
+                </Menu.Item>
+                <Menu.Item key='4' disabled={!isLoggedIn}>
+                  <Locked active={!isLoggedIn} />
+                  Созданные мной
+                </Menu.Item>
+                <Menu.Item key='5' disabled={!isLoggedIn}>
+                  <Locked active={!isLoggedIn} />Я участвую
+                </Menu.Item>
+                <Menu.Item
+                  key='6'
+                  className='link-divided'
+                  disabled={!isLoggedIn}
+                >
+                  <Locked active={!isLoggedIn} />
                   <PlusOutlined />
-                  Создать событие
+                  Событие
                 </Menu.Item>
 
                 <Menu.Item key='7'>О системе</Menu.Item>
-                <Menu.Item key='8' onClick={handleLogout}>
-                  Выход
-                </Menu.Item>
+                {user && (
+                  <Menu.Item key='8' onClick={handleLogout}>
+                    Выход
+                  </Menu.Item>
+                )}
               </Menu>
             </Affix>
           </Sider>

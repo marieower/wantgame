@@ -1,12 +1,12 @@
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
-import { IUserControlState } from './state'
 import {
-  USER_CONTROL_LOGOUT,
   USER_CONTROL_LOGGED_IN,
-  USER_CONTROL_SET_FETCHING,
+  USER_CONTROL_LOGGED_OUT,
   USER_CONTROL_SET_ERROR,
+  USER_CONTROL_SET_FETCHING,
 } from './actions'
+import { IUserControlState } from './state'
 
 const initialState: IUserControlState = {
   user: null,
@@ -35,7 +35,7 @@ export class UserControlReducer
       case USER_CONTROL_LOGGED_IN:
         newState.user = { ...action.payload }
         break
-      case USER_CONTROL_LOGOUT:
+      case USER_CONTROL_LOGGED_OUT:
         newState.user = null
         localStorage.setItem('userId', '')
         break

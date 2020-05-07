@@ -1,7 +1,7 @@
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Form, Input } from 'antd'
 import React from 'react'
-import { phonePattern } from '../../shared/constants/phonePattern'
 import { useDispatch } from 'react-redux'
+import { phonePattern } from '../../shared/constants/phonePattern'
 import { userControlActions } from '../userControl/actions'
 
 export const RegisterForm = () => {

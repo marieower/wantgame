@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { LoginRegister } from './loginRegister'
 import { Main } from './main'
 import Tmp from './tmp/'
-import { PrivateRoute } from '../shared/components/PrivateRoute'
 
 export const App = () => {
   return (
@@ -15,9 +14,9 @@ export const App = () => {
         <Route path='/login-register'>
           <LoginRegister />
         </Route>
-        <PrivateRoute path='/'>
+        <Route path='/'>
           <Main />
-        </PrivateRoute>
+        </Route>
       </Switch>
     </Router>
   )
