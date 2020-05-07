@@ -11,7 +11,6 @@ import {
   USER_CONTROL_LOGOUT,
   USER_CONTROL_REGISTER,
 } from './actions'
-import { useHistory } from 'react-router-dom'
 
 export class UserControlApiSaga {
   public constructor() {
@@ -36,7 +35,6 @@ export class UserControlApiSaga {
   private *login(
     action: IActionPayloaded<{ phone: string; password: string }>,
   ) {
-    console.log(action.payload)
     const { userClient } = yield select((state: IRootState) => state.services)
 
     yield put(userControlActions.setFetching(true))
@@ -47,7 +45,7 @@ export class UserControlApiSaga {
     if (response.status === 200) {
       yield put(userControlActions.loggedIn(response.data))
 
-      yield put(servicesActions.updateUser(action.payload))
+      yield put(servicesActions.setUser(action.payload))
 
       localStorage.setItem('userId', String(response.data.id))
     } else {
@@ -60,7 +58,7 @@ export class UserControlApiSaga {
   private *logout() {
     window.location.href = '/login-register'
 
-    yield put(servicesActions.updateUser(null))
+    yield put(servicesActions.execUser())
     yield put(userControlActions.loggedOut())
   }
 
