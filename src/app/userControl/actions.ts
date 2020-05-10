@@ -7,8 +7,12 @@ export const USER_CONTROL_REGISTER = 'USER_CONTROL_REGISTER'
 export const USER_CONTROL_LOGOUT = 'USER_CONTROL_LOGOUT'
 export const USER_CONTROL_LOGGED_OUT = 'USER_CONTROL_LOGGED_OUT'
 
+export const USER_CONTROL_CONTINUE_SESSION = 'USER_CONTROL_CONTINUE_SESSION'
+
 export const USER_CONTROL_SET_FETCHING = 'USER_CONTROL_SET_FETCHING'
 export const USER_CONTROL_SET_ERROR = 'USER_CONTROL_SET_ERROR'
+
+export const USER_CONTROL_SET_CHECKED = 'USER_CONTROL_SET_CHECKED'
 
 export const userControlActions = {
   login: (payload: { phone: string; password: string }) => ({
@@ -39,8 +43,17 @@ export const userControlActions = {
     payload,
   }),
 
+  continueSession: () => ({
+    type: USER_CONTROL_CONTINUE_SESSION,
+  }),
+
   setError: (payload: string) => ({
     type: USER_CONTROL_SET_ERROR,
+    payload,
+  }),
+
+  setChecked: (payload: boolean) => ({
+    type: USER_CONTROL_SET_CHECKED,
     payload,
   }),
 }

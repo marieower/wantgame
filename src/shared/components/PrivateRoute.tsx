@@ -1,15 +1,24 @@
-import React, { ReactNode } from 'react'
-import { Route, Redirect, RouteProps } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Spin } from 'antd'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, RouteProps, Redirect } from 'react-router-dom'
+import { userControlActions } from '../../app/userControl/actions'
 import { IRootState } from '../../store/state'
 
-export const PrivateRoute = ({ children, ...rest }: RouteProps) => {
-  const { user } = useSelector((state: IRootState) => state.userControl)
+interface IRouteProps extends RouteProps {
+  isPrivate?: boolean
+}
+
+export const PrivateRoute = ({ children, isPrivate, ...rest }: IRouteProps) => {
+  const { user, isChecked } = useSelector(
+    (state: IRootState) => state.userControl,
+  )
+
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        user !== null ? (
+        user !== null && isChecked ? (
           children
         ) : (
           <Redirect

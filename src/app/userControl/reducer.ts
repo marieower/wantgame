@@ -5,6 +5,7 @@ import {
   USER_CONTROL_LOGGED_OUT,
   USER_CONTROL_SET_ERROR,
   USER_CONTROL_SET_FETCHING,
+  USER_CONTROL_SET_CHECKED,
 } from './actions'
 import { IUserControlState } from './state'
 
@@ -12,6 +13,7 @@ const initialState: IUserControlState = {
   user: null,
   isFetching: false,
   error: '',
+  isChecked: false,
 }
 
 export class UserControlReducer
@@ -44,6 +46,9 @@ export class UserControlReducer
         break
       case USER_CONTROL_SET_ERROR:
         newState.error = action.payload
+        break
+      case USER_CONTROL_SET_CHECKED:
+        newState.isChecked = action.payload
         break
     }
 

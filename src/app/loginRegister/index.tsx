@@ -1,11 +1,12 @@
 import { Card, Spin, Tabs, Alert } from 'antd'
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { IRootState } from '../../store/state'
 import './index.css'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import { userControlActions } from '../userControl/actions'
 
 const { TabPane } = Tabs
 
@@ -14,12 +15,19 @@ export const LoginRegister = () => {
     (state: IRootState) => state.userControl,
   )
   const history = useHistory()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (user !== null) {
       history.push('/')
     }
   }, [user, history])
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      dispatch(userControlActions.continueSession())
+    }
+  }, [])
 
   return (
     <div className='LoginRegister-container'>

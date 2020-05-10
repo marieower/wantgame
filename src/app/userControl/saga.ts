@@ -2,11 +2,13 @@ import { AxiosResponse } from 'axios'
 import { put, select, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { servicesActions } from '../../services/actions'
+import { LoginDto } from '../../shared/dto/LoginDto'
 import { NewUserDto } from '../../shared/dto/NewUserDto'
 import { IActionPayloaded } from '../../store/IAction'
 import { IRootState } from '../../store/state'
 import {
   userControlActions,
+  USER_CONTROL_CONTINUE_SESSION,
   USER_CONTROL_LOGIN,
   USER_CONTROL_LOGOUT,
   USER_CONTROL_REGISTER,
@@ -17,6 +19,7 @@ export class UserControlApiSaga {
     this.login = this.login.bind(this)
     this.register = this.register.bind(this)
     this.logout = this.logout.bind(this)
+    this.continueSession = this.continueSession.bind(this)
   }
 
   public static Initialize() {
@@ -30,11 +33,12 @@ export class UserControlApiSaga {
       safeSagaExecute(a, this.register),
     )
     yield takeEvery(USER_CONTROL_LOGOUT, (a) => safeSagaExecute(a, this.logout))
+    yield takeEvery(USER_CONTROL_CONTINUE_SESSION, (a) =>
+      safeSagaExecute(a, this.continueSession),
+    )
   }
 
-  private *login(
-    action: IActionPayloaded<{ phone: string; password: string }>,
-  ) {
+  private *login(action: IActionPayloaded<LoginDto>) {
     const { userClient } = yield select((state: IRootState) => state.services)
 
     yield put(userControlActions.setFetching(true))
@@ -77,5 +81,22 @@ export class UserControlApiSaga {
     }
 
     yield put(userControlActions.setFetching(false))
+  }
+
+  private *continueSession() {
+    let token = localStorage.getItem('token')
+
+    if (token) {
+      token = Buffer.from(
+        localStorage.getItem('token') as string,
+        'base64',
+      ).toString('utf8')
+
+      const [phone, password] = token.split(':')
+
+      yield this.login(userControlActions.login({ phone, password }))
+    }
+
+    yield put(userControlActions.setChecked(true))
   }
 }

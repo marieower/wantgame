@@ -8,15 +8,16 @@ export abstract class AbstractClient {
   public URL: string
   public axios: any
 
-  public constructor(entity: Entity, phone: string, password: string) {
+  public constructor(
+    entity: Entity,
+    token: string = Buffer.from('1:password', 'utf8').toString('base64'),
+  ) {
     this.entity = entity
     this.URL = `${serverEntryPoint}${this.entity}`
     this.axios = axios.create({
       timeout: 20000,
       headers: {
-        Authorization: `Basic ${Buffer.from('1:password', 'utf8').toString(
-          'base64',
-        )}`,
+        Authorization: `Basic ${token}`,
       },
     })
   }

@@ -25,10 +25,7 @@ export class MainApiSaga {
 
     const response: AxiosResponse = yield gameClient.getAll()
 
-    if (response.status === 200) {
-      yield put(mainActions.dataLoaded(response.data))
-    } else {
-    }
+    yield put(mainActions.dataLoaded(response.data))
 
     yield put(mainActions.setFetching(false))
   }

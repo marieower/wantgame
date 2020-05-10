@@ -4,4 +4,5 @@ export interface IUserControlState {
   user: UserDto | null
   isFetching: boolean
   error: string
+  isChecked: boolean
 }
