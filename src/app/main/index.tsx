@@ -4,6 +4,7 @@ import { IRootState } from '../../store/state'
 import { PageWrapper } from '../pageWrapper'
 import { gameControlActions } from '../gameControl/actions'
 import { GamesList } from '../gamesList'
+import { GameModal } from '../gameModal'
 import './index.css'
 
 export const Main = () => {
@@ -20,6 +21,7 @@ export const Main = () => {
   return (
     <PageWrapper>
       <GamesList games={games} loading={isFetching} />
+      <GameModal />
     </PageWrapper>
   )
 }

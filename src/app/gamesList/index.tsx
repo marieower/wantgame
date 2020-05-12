@@ -22,9 +22,17 @@ export const GamesList = ({ games, loading }: IGamesListProps) => {
     return members.includes(user?.id as number)
   }
 
-  const handleJoin = (id: number) => dispatch(gameControlActions.join(id))
+  const handleOpenGame = (id: number) => {
+    dispatch(gameControlActions.openModal(id))
+  }
 
-  const handleLeft = (id: number) => dispatch(gameControlActions.left(id))
+  const handleJoin = (id: number) => {
+    dispatch(gameControlActions.join(id))
+  }
+
+  const handleLeft = (id: number) => {
+    dispatch(gameControlActions.left(id))
+  }
 
   return (
     <List
@@ -37,7 +45,11 @@ export const GamesList = ({ games, loading }: IGamesListProps) => {
 
         return (
           <List.Item>
-            <Card className='card' hoverable={true}>
+            <Card
+              className='card'
+              hoverable={true}
+              onClick={() => handleOpenGame(item.id)}
+            >
               <div className='card__header'>
                 <h3>{item.name}</h3>
               </div>
@@ -47,10 +59,6 @@ export const GamesList = ({ games, loading }: IGamesListProps) => {
                 alt='example'
                 src='https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
               />
-
-              <div className='card__body'>
-                <span>{item.description}</span>
-              </div>
 
               <div className='card__footer'>
                 <div className='card__footer__user'>
@@ -72,8 +80,13 @@ export const GamesList = ({ games, loading }: IGamesListProps) => {
                 type='primary'
                 color='blue'
                 block={true}
-                onClick={() =>
-                  joined ? handleLeft(item.id) : handleJoin(item.id)
+                onClick={
+                  isLoggedIn
+                    ? (e) => {
+                        e.stopPropagation()
+                        joined ? handleLeft(item.id) : handleJoin(item.id)
+                      }
+                    : undefined
                 }
               >
                 {joined ? 'Отменить' : 'Присоединиться'}

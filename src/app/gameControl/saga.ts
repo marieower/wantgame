@@ -60,6 +60,7 @@ export class GameControlApiSaga {
       )[0]
 
       game.membersIds = game.membersIds.concat([userId])
+      game.currentPlayersCount = game.currentPlayersCount + 1
 
       yield put(gameControlActions.dataLoaded(games))
     }
@@ -84,6 +85,7 @@ export class GameControlApiSaga {
       )[0]
 
       game.membersIds = game.membersIds.filter((item) => userId !== item)
+      game.currentPlayersCount = game.currentPlayersCount - 1
 
       yield put(gameControlActions.dataLoaded(games))
     }

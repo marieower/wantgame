@@ -1,29 +1,29 @@
-.list .card__image {
+.card .card__image {
   width: 100%;
   margin-bottom: 10px;
 }
 
-.list .card__footer {
+.card .card__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px 0;
 }
 
-.list .card__footer__counter {
+.card .card__footer__counter {
   display: flex;
   align-items: center;
 }
 
-.list .card__footer__user span:first-child {
+.card .card__footer__user span:first-child {
   margin-right: 10px;
 }
 
-.list .card__footer__counter p {
+.card .card__footer__counter p {
   margin-right: 10px;
   margin-bottom: 0;
 }
 
-.list .card__footer__counter .counter * {
+.card .card__footer__counter .counter * {
   font-size: 0.9rem;
 }

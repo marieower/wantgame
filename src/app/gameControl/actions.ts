@@ -30,8 +30,7 @@ export const gameControlActions = {
     type: GAME_CONTROL_OPEN_MODAL,
     payload,
   }),
-  closeModal: (payload: number) => ({
+  closeModal: () => ({
     type: GAME_CONTROL_CLOSE_MODAL,
-    payload,
   }),
 }
