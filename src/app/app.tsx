@@ -1,13 +1,13 @@
+import { Spin } from 'antd'
 import * as React from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { IRootState } from '../store/state'
 import { LoginRegister } from './loginRegister'
 import { Main } from './main'
-import Tmp from './tmp/'
-import { useDispatch, useSelector } from 'react-redux'
+import { PageWrapper } from './pageWrapper'
 import { userControlActions } from './userControl/actions'
-import { useEffect } from 'react'
-import { IRootState } from '../store/state'
-import { Spin } from 'antd'
 
 export const App = () => {
   const { isChecked } = useSelector((state: IRootState) => state.userControl)
@@ -36,16 +36,17 @@ export const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/tmp'>
-          <Tmp />
-        </Route>
         <Route path='/login-register'>
           <LoginRegister />
         </Route>
-        <Route path='/'>
-          <Main />
-        </Route>
       </Switch>
+      <PageWrapper>
+        <Switch>
+          <Route exact={true} path='/'>
+            <Main />
+          </Route>
+        </Switch>
+      </PageWrapper>
     </Router>
   )
 }

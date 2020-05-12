@@ -2,9 +2,12 @@ import { PlusOutlined, UserOutlined } from '@ant-design/icons'
 import { Affix, Layout, Menu, Spin } from 'antd'
 import React, { ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Locked } from '../../shared/components/Locked'
 import { IRootState } from '../../store/state'
+import { gameControlActions } from '../gameControl/actions'
+import { GameForm } from '../gameForm'
+import { GameModal } from '../gameModal'
 import { userControlActions } from '../userControl/actions'
 import './index.css'
 
@@ -25,6 +28,12 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
     dispatch(userControlActions.logout())
   }
 
+  const handleGameFormOpen = () => {
+    dispatch(gameControlActions.openForm(null))
+  }
+
+  const location = useLocation()
+
   if (isFetching) {
     return <Spin />
   }
@@ -43,8 +52,7 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
             <Affix>
               <Menu
                 mode='inline'
-                defaultSelectedKeys={['2']}
-                defaultOpenKeys={['sub1']}
+                selectedKeys={[location.pathname]}
                 style={{ height: '100%' }}
               >
                 <Menu.Item key='1' className='link-divided'>
@@ -57,7 +65,9 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
                   )}
                 </Menu.Item>
 
-                <Menu.Item key='2'>Главная</Menu.Item>
+                <Menu.Item key='/'>
+                  <Link to='/'>Главная</Link>
+                </Menu.Item>
                 <Menu.Item key='3' disabled={!isLoggedIn}>
                   <Locked active={!isLoggedIn} />
                   Личный кабинет{' '}
@@ -73,6 +83,7 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
                   key='6'
                   className='link-divided'
                   disabled={!isLoggedIn}
+                  onClick={handleGameFormOpen}
                 >
                   <Locked active={!isLoggedIn} />
                   <PlusOutlined />
@@ -90,6 +101,8 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
           </Sider>
           <Content style={{ padding: '0 24px', minHeight: '75vh' }}>
             {children}
+            <GameForm />
+            <GameModal />
           </Content>
         </Layout>
       </Content>

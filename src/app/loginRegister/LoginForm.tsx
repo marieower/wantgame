@@ -23,17 +23,12 @@ export const LoginForm = () => {
     dispatch(userControlActions.login(values))
   }
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
     <Form
       layout='vertical'
       name='basic'
       initialValues={initialValues}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
     >
       <Form.Item
         label='Номер телефона'

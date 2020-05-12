@@ -5,6 +5,8 @@ import {
   GAME_CONTROL_SET_FETCHING,
   GAME_CONTROL_OPEN_MODAL,
   GAME_CONTROL_CLOSE_MODAL,
+  GAME_CONTROL_OPEN_FORM,
+  GAME_CONTROL_CLOSE_FORM,
 } from './actions'
 import { IGameControlState } from './state'
 
@@ -12,6 +14,10 @@ const initialState: IGameControlState = {
   games: [],
   isFetching: false,
   currentGame: null,
+  gameForm: {
+    game: null,
+    opened: false,
+  },
 }
 
 export class GameControlReducer
@@ -43,6 +49,18 @@ export class GameControlReducer
         break
       case GAME_CONTROL_CLOSE_MODAL:
         newState.currentGame = null
+        break
+      case GAME_CONTROL_OPEN_FORM:
+        newState.gameForm = {
+          game: action.payload,
+          opened: true,
+        }
+        break
+      case GAME_CONTROL_CLOSE_FORM:
+        newState.gameForm = {
+          game: null,
+          opened: false,
+        }
         break
     }
 

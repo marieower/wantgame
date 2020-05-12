@@ -2,6 +2,7 @@ import { AbstractClient } from './AbstractClient'
 import { AxiosResponse, AxiosError } from 'axios'
 import { GameDto } from '../shared/dto/GameDto'
 import { ErrorDto } from '../shared/dto/ErrorDto'
+import { NewGameDto } from '../shared/dto/NewGameDto'
 
 export class GameClient extends AbstractClient {
   constructor(token?: string) {
@@ -23,6 +24,12 @@ export class GameClient extends AbstractClient {
   public left = (id: string): AxiosResponse => {
     return this.axios
       .post(`${this.URL}/left/${id}`)
+      .catch((error: AxiosError) => this.errorHandler(error))
+  }
+
+  public add = (dto: NewGameDto): AxiosResponse => {
+    return this.axios
+      .post(`${this.URL}/new/`, dto)
       .catch((error: AxiosError) => this.errorHandler(error))
   }
 }

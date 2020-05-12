@@ -1,22 +1,25 @@
 import { UserOutlined } from '@ant-design/icons'
 import { Button, Card, List, Statistic } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GameDto } from '../../shared/dto/GameDto'
 import { useLoggedStatus } from '../../shared/hooks/useLoggedStatus'
 import { IRootState } from '../../store/state'
 import { gameControlActions } from '../gameControl/actions'
 
-interface IGamesListProps {
-  games: GameDto[]
-  loading: boolean
-}
+export const GamesList = () => {
+  const { games, isFetching } = useSelector(
+    (state: IRootState) => state.gameControl,
+  )
 
-export const GamesList = ({ games, loading }: IGamesListProps) => {
   const { user } = useSelector((state: IRootState) => state.userControl)
   const isLoggedIn = useLoggedStatus()
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(gameControlActions.loadData())
+  }, [])
 
   const isJoined = (members: number[]) => {
     return members.includes(user?.id as number)
@@ -39,7 +42,7 @@ export const GamesList = ({ games, loading }: IGamesListProps) => {
       className='list'
       grid={{ gutter: 20, column: 3 }}
       dataSource={games as GameDto[]}
-      loading={loading}
+      loading={isFetching}
       renderItem={(item: GameDto) => {
         const joined = isJoined(item.membersIds)
 

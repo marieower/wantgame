@@ -1,5 +1,5 @@
-import { UserOutlined } from '@ant-design/icons'
-import { Modal, Statistic, Button } from 'antd'
+import { CalendarOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Modal, Statistic } from 'antd'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootState } from '../../store/state'
@@ -46,6 +46,13 @@ export const GameModal = () => {
 
         <div className='card__body'>
           <span>{game.description}</span>
+          <div>
+            <HomeOutlined />
+            <span>{game.place}</span>
+
+            <CalendarOutlined />
+            <span>{new Date(game.time).toLocaleString()}</span>
+          </div>
         </div>
 
         <div className='card__footer'>
