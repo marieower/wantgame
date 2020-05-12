@@ -47,7 +47,7 @@ export const RegisterForm = () => {
           {
             pattern: phonePattern,
             message:
-              'Неверный номер телефона! Введите номер в формате +7 XXX XXX XX XX',
+              'Неверный номер телефона! Введите номер в формате XXX XXX XX XX',
           },
         ]}
       >
@@ -61,7 +61,11 @@ export const RegisterForm = () => {
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item label='Обо мне' name='aboutMe'>
+      <Form.Item
+        label='Обо мне'
+        name='aboutMe'
+        rules={[{ required: true, message: 'Обязательное поле!!' }]}
+      >
         <Input.TextArea />
       </Form.Item>
 

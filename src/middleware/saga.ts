@@ -1,12 +1,12 @@
 import { all } from 'redux-saga/effects'
-import { MainApiSaga } from '../app/main/saga'
+import { GameControlApiSaga } from '../app/gameControl/saga'
 import { TmpApiSaga } from '../app/tmp/saga'
 import { UserControlApiSaga } from '../app/userControl/saga'
 
 export const rootSaga = function* root() {
   yield all([
     TmpApiSaga.Initialize(),
-    MainApiSaga.Initialize(),
+    GameControlApiSaga.Initialize(),
     UserControlApiSaga.Initialize(),
   ])
 }

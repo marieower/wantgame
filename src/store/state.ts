@@ -1,11 +1,11 @@
-import { IMainState } from '../app/main/state'
+import { IGameControlState } from '../app/gameControl/state'
 import { ITmpState } from '../app/tmp/state'
 import { IUserControlState } from '../app/userControl/state'
 import { IServicesState } from '../services/state'
 
 export interface IRootState {
   tmp: ITmpState
-  main: IMainState
+  gameControl: IGameControlState
   userControl: IUserControlState
   services: IServicesState
 }

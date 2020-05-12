@@ -2,27 +2,24 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootState } from '../../store/state'
 import { PageWrapper } from '../pageWrapper'
-import { mainActions } from './actions'
-import { GamesList } from '../../shared/components/GamesList'
+import { gameControlActions } from '../gameControl/actions'
+import { GamesList } from '../gamesList'
 import './index.css'
 
 export const Main = () => {
-  const { games, isFetching } = useSelector((state: IRootState) => state.main)
+  const { games, isFetching } = useSelector(
+    (state: IRootState) => state.gameControl,
+  )
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(mainActions.loadData())
+    dispatch(gameControlActions.loadData())
   }, [dispatch])
 
   return (
     <PageWrapper>
-      <GamesList
-        onJoin={() => null}
-        onLeft={() => null}
-        games={games}
-        loading={isFetching}
-      />
+      <GamesList games={games} loading={isFetching} />
     </PageWrapper>
   )
 }

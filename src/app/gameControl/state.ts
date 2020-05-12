@@ -1,6 +1,7 @@
 import { GameDto } from '../../shared/dto/GameDto'
 
-export interface IMainState {
+export interface IGameControlState {
   games: GameDto[]
   isFetching: boolean
+  currentGame?: number
 }

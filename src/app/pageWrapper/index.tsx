@@ -1,5 +1,5 @@
 import { PlusOutlined, UserOutlined } from '@ant-design/icons'
-import { Affix, Layout, Menu } from 'antd'
+import { Affix, Layout, Menu, Spin } from 'antd'
 import React, { ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -15,12 +15,18 @@ interface IPageWrapperProps {
 }
 
 export const PageWrapper = ({ children }: IPageWrapperProps) => {
-  const { user } = useSelector((state: IRootState) => state.userControl)
+  const { user, isFetching } = useSelector(
+    (state: IRootState) => state.userControl,
+  )
   const isLoggedIn = user !== null
   const dispatch = useDispatch()
 
   const handleLogout = () => {
     dispatch(userControlActions.logout())
+  }
+
+  if (isFetching) {
+    return <Spin />
   }
 
   return (

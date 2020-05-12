@@ -17,7 +17,7 @@ export const App = () => {
     if (!isChecked) {
       dispatch(userControlActions.continueSession())
     }
-  }, [isChecked])
+  }, [isChecked, dispatch])
 
   if (!isChecked) {
     return (

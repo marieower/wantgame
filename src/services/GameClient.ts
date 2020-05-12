@@ -13,4 +13,16 @@ export class GameClient extends AbstractClient {
       .get(`${this.URL}`)
       .catch((error: AxiosError) => this.errorHandler(error))
   }
+
+  public join = (id: string): AxiosResponse => {
+    return this.axios
+      .post(`${this.URL}/join/${id}`)
+      .catch((error: AxiosError) => this.errorHandler(error))
+  }
+
+  public left = (id: string): AxiosResponse => {
+    return this.axios
+      .post(`${this.URL}/left/${id}`)
+      .catch((error: AxiosError) => this.errorHandler(error))
+  }
 }

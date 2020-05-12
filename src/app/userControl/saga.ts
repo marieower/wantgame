@@ -60,10 +60,14 @@ export class UserControlApiSaga {
   }
 
   private *logout() {
-    window.location.href = '/login-register'
+    yield put(userControlActions.setFetching(true))
 
     yield put(servicesActions.execUser())
     yield put(userControlActions.loggedOut())
+
+    window.location.href = '/login-register'
+
+    yield put(userControlActions.setFetching(false))
   }
 
   private *register(action: IActionPayloaded<NewUserDto>) {
@@ -74,13 +78,14 @@ export class UserControlApiSaga {
 
     const response: AxiosResponse = yield userClient.register(action.payload)
 
-    if (response.status === 200) {
-      console.log(response)
+    if (response.status === 201) {
+      const { phone, password } = action.payload
+      yield put(userControlActions.login({ phone, password }))
     } else {
       yield put(userControlActions.setError(response.data.error))
-    }
 
-    yield put(userControlActions.setFetching(false))
+      yield put(userControlActions.setFetching(false))
+    }
   }
 
   private *continueSession() {
