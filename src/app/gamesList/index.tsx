@@ -17,10 +17,6 @@ export const GamesList = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(gameControlActions.loadData())
-  }, [])
-
   const isJoined = (members: number[]) => {
     return members.includes(user?.id as number)
   }

@@ -1,50 +1,60 @@
 import {
-  Modal,
-  Form,
-  Radio,
-  Input,
-  Select,
-  TreeSelect,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  Switch,
+  Alert,
   Button,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+  Switch,
   TimePicker,
 } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { IRootState } from '../../store/state'
-import { gameControlActions } from '../gameControl/actions'
-import TextArea from 'antd/lib/input/TextArea'
+import { gameFormActions } from './actions'
 
 export const GameForm = () => {
-  const { isFetching, gameForm, games } = useSelector(
-    (state: IRootState) => state.gameControl,
+  const { opened, isFetching, error } = useSelector(
+    (state: IRootState) => state.gameForm,
   )
 
   const dispatch = useDispatch()
 
   const handleCancel = () => {
-    dispatch(gameControlActions.closeForm())
+    dispatch(gameFormActions.closeForm())
   }
 
   const onFinish = (values: any) => {
     const formattedValues = values
 
-    formattedValues.time = new Date(formattedValues.time).toISOString()
+    const date = new Date(formattedValues.date)
+    const time = new Date(formattedValues.time)
+
+    var datetime = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds(),
+    )
+
+    formattedValues.time = new Date(datetime)
     delete formattedValues.date
 
     formattedValues.sportId = Number(formattedValues.sportId)
 
-    dispatch(gameControlActions.add(values))
+    dispatch(gameFormActions.add(values))
   }
 
-  if (gameForm.opened) {
+  if (opened) {
     return (
       <Modal
         title={'Новое событие'}
-        visible={gameForm.opened}
+        visible={opened}
         onCancel={handleCancel}
         footer={null}
       >
@@ -137,7 +147,7 @@ export const GameForm = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Введите дату проведения мероприятия!',
+                    message: 'Введите время проведения мероприятия!',
                   },
                 ]}
               >
@@ -181,10 +191,17 @@ export const GameForm = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button block={true} type='primary' htmlType='submit'>
+            <Button
+              block={true}
+              loading={isFetching}
+              type='primary'
+              htmlType='submit'
+            >
               Создать
             </Button>
           </Form.Item>
+
+          {error && <Alert closable={true} message={error} type='error' />}
         </Form>
       </Modal>
     )

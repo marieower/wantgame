@@ -15,6 +15,18 @@ export class GameClient extends AbstractClient {
       .catch((error: AxiosError) => this.errorHandler(error))
   }
 
+  public getCreatedByMe = (): AxiosResponse<GameDto[] | ErrorDto> => {
+    return this.axios
+      .get(`${this.URL}/created`)
+      .catch((error: AxiosError) => this.errorHandler(error))
+  }
+
+  public getJoined = (): AxiosResponse<GameDto[] | ErrorDto> => {
+    return this.axios
+      .get(`${this.URL}/player`)
+      .catch((error: AxiosError) => this.errorHandler(error))
+  }
+
   public join = (id: string): AxiosResponse => {
     return this.axios
       .post(`${this.URL}/join/${id}`)

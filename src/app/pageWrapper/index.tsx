@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { Locked } from '../../shared/components/Locked'
 import { IRootState } from '../../store/state'
-import { gameControlActions } from '../gameControl/actions'
 import { GameForm } from '../gameForm'
+import { gameFormActions } from '../gameForm/actions'
 import { GameModal } from '../gameModal'
 import { userControlActions } from '../userControl/actions'
 import './index.css'
@@ -29,7 +29,7 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
   }
 
   const handleGameFormOpen = () => {
-    dispatch(gameControlActions.openForm(null))
+    dispatch(gameFormActions.openForm(null))
   }
 
   const location = useLocation()
@@ -72,12 +72,16 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => {
                   <Locked active={!isLoggedIn} />
                   Личный кабинет{' '}
                 </Menu.Item>
-                <Menu.Item key='4' disabled={!isLoggedIn}>
-                  <Locked active={!isLoggedIn} />
-                  Созданные мной
+                <Menu.Item key='/created-by-me' disabled={!isLoggedIn}>
+                  <Link to='/created-by-me'>
+                    <Locked active={!isLoggedIn} />
+                    Созданные мной
+                  </Link>
                 </Menu.Item>
-                <Menu.Item key='5' disabled={!isLoggedIn}>
-                  <Locked active={!isLoggedIn} />Я участвую
+                <Menu.Item key='/joined' disabled={!isLoggedIn}>
+                  <Link to='/joined'>
+                    <Locked active={!isLoggedIn} />Я участвую
+                  </Link>
                 </Menu.Item>
                 <Menu.Item
                   key='6'

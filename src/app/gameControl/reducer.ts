@@ -1,12 +1,10 @@
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
 import {
-  GAME_CONTROL_DATA_LOADED,
-  GAME_CONTROL_SET_FETCHING,
-  GAME_CONTROL_OPEN_MODAL,
   GAME_CONTROL_CLOSE_MODAL,
-  GAME_CONTROL_OPEN_FORM,
-  GAME_CONTROL_CLOSE_FORM,
+  GAME_CONTROL_DATA_LOADED,
+  GAME_CONTROL_OPEN_MODAL,
+  GAME_CONTROL_SET_FETCHING,
 } from './actions'
 import { IGameControlState } from './state'
 
@@ -49,18 +47,6 @@ export class GameControlReducer
         break
       case GAME_CONTROL_CLOSE_MODAL:
         newState.currentGame = null
-        break
-      case GAME_CONTROL_OPEN_FORM:
-        newState.gameForm = {
-          game: action.payload,
-          opened: true,
-        }
-        break
-      case GAME_CONTROL_CLOSE_FORM:
-        newState.gameForm = {
-          game: null,
-          opened: false,
-        }
         break
     }
 

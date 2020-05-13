@@ -3,7 +3,10 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { PrivateRoute } from '../shared/components/PrivateRoute'
 import { IRootState } from '../store/state'
+import { CreatedByMe } from './createdByMe'
+import { Joined } from './joined'
 import { LoginRegister } from './loginRegister'
 import { Main } from './main'
 import { PageWrapper } from './pageWrapper'
@@ -45,6 +48,12 @@ export const App = () => {
           <Route exact={true} path='/'>
             <Main />
           </Route>
+          <PrivateRoute exact={true} path='/joined'>
+            <Joined />
+          </PrivateRoute>
+          <PrivateRoute exact={true} path='/created-by-me'>
+            <CreatedByMe />
+          </PrivateRoute>
         </Switch>
       </PageWrapper>
     </Router>
